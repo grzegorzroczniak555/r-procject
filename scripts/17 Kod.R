@@ -72,5 +72,23 @@ preprocessedDir <- paste(
   "dokumenty-tekstowe-poPrzetworzeniu",
   sep = "\\"
 )
-dir.create(preprocessedDir)
 writeCorpus(corpus, path = preprocessedDir)
+
+#macierz częstości
+tdmTfAll <- TermDocumentMatrix(corpus)
+tdmTfidfAll <- TermDocumentMatrix(
+  corpus, 
+  control = list(
+    weighting = weightTfIdf
+  )
+)
+
+#konwersja na macierz klasyczną
+tdmTfAllMatrix <- as.matrix(tdmTfAll)
+
+#eksport do pliku
+matrixFile <- paste(
+  outputDir,
+  "tdmTfAll.csv",
+  sep = "\\"
+)
