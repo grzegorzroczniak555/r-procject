@@ -75,16 +75,64 @@ preprocessedDir <- paste(
 writeCorpus(corpus, path = preprocessedDir)
 
 #macierz częstości
+ #TDM - słowa jako wiersze, dokumenty jako kolumny
+ #bez parametrów
 tdmTfAll <- TermDocumentMatrix(corpus)
+ #inverse document frequency
 tdmTfidfAll <- TermDocumentMatrix(
   corpus, 
   control = list(
     weighting = weightTfIdf
   )
 )
+ #zakres liczby dokumentów w których musi być spełniony warunek
+tdmTfBounds <- TermDocumentMatrix(
+  corpus, 
+  control = list(
+    bounds = list(
+      global = c(2,14)
+    )
+  )
+)
+ #weightTfIdf + bounds
+tdmTfidfBounds <- TermDocumentMatrix(
+  corpus, 
+  control = list(
+    weighting = weightTfIdf,
+    bounds = list(
+      global = c(2,14)
+    )
+  )
+)
+# DTM - dokumenty jako wiersze, słowa jako kolumny
+ #bez parametrów
+dtmTfAll <- DocumentTermMatrix(corpus)
+ #inverse document frequency
+dtmTfidfAll <- DocumentTermMatrix(
+  corpus, 
+  control = list(
+    weighting = weightTfIdf
+  )
+)
+ ##weightTfIdf + bounds
+dtmTfidfBounds <- DocumentTermMatrix(
+  corpus, 
+  control = list(
+    weighting = weightTfIdf,
+    bounds = list(
+      global = c(2,14)
+    )
+  )
+)
 
 #konwersja na macierz klasyczną
 tdmTfAllMatrix <- as.matrix(tdmTfAll)
+tdmTfidfAllMatrix <- as.matrix(tdmTfidfAll)
+tdmTfBoundsMatrix <- as.matrix(tdmTfBounds)
+tdmTfidfBoundsMatrix <- as.matrix(tdmTfidfBounds)
+dtmTfAllMatrix <- as.matrix(dtmTfAll)
+dtmTfidfAllMatrix <- as.matrix(dtmTfidfAll)
+dtmTfidfBoundsMatrix <- as.matrix(dtmTfidfBounds)
 
 #eksport do pliku
 matrixFile <- paste(
@@ -92,3 +140,47 @@ matrixFile <- paste(
   "tdmTfAll.csv",
   sep = "\\"
 )
+write.table(tdmTfAllMatrix, file = matrixFile, sep = ";", dec = ",", col.names = NA)
+
+matrixFile <- paste(
+  outputDir,
+  "tdmTfidfAllMatrix.csv",
+  sep = "\\"
+)
+write.table(tdmTfidfAllMatrix, file = matrixFile, sep = ";", dec = ",", col.names = NA)
+
+matrixFile <- paste(
+  outputDir,
+  "tdmTfBoundsMatrix.csv",
+  sep = "\\"
+)
+write.table(tdmTfBoundsMatrix, file = matrixFile, sep = ";", dec = ",", col.names = NA)
+
+matrixFile <- paste(
+  outputDir,
+  "tdmTfidfBoundsMatrix.csv",
+  sep = "\\"
+)
+write.table(tdmTfidfBoundsMatrix, file = matrixFile, sep = ";", dec = ",", col.names = NA)
+
+matrixFile <- paste(
+  outputDir,
+  "dtmTfAllMatrix.csv",
+  sep = "\\"
+)
+write.table(dtmTfAllMatrix, file = matrixFile, sep = ";", dec = ",", col.names = NA)
+
+matrixFile <- paste(
+  outputDir,
+  "dtmTfidfAllMatrix.csv",
+  sep = "\\"
+)
+write.table(dtmTfidfAllMatrix, file = matrixFile, sep = ";", dec = ",", col.names = NA)
+
+matrixFile <- paste(
+  outputDir,
+  "dtmTfidfBoundsMatrix.csv",
+  sep = "\\"
+)
+write.table(dtmTfidfBoundsMatrix, file = matrixFile, sep = ";", dec = ",", col.names = NA)
+
