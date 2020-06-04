@@ -125,6 +125,17 @@ dtmTfidfBounds <- DocumentTermMatrix(
   )
 )
 
+tdmTfidfBounds <- TermDocumentMatrix(
+  corpus, 
+  control = list(
+    weighting = weightTfIdf,
+    bounds = list(
+      global = c(2,16)
+    )
+  )
+)
+
+
 #konwersja na macierz klasyczną
 tdmTfAllMatrix <- as.matrix(tdmTfAll)
 tdmTfidfAllMatrix <- as.matrix(tdmTfidfAll)
