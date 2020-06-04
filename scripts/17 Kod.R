@@ -4,7 +4,6 @@ library(hunspell)
 library(stringr)
 
 library(lsa)
-
 library(dendextend)
 library(corrplot)
 library(flexclust)
@@ -368,3 +367,85 @@ legend(
   text.col = "orange"
 )
 dev.off()
+
+
+######
+### analiza skupień dokumentów
+######
+
+
+par(mai = c(1,2,1,1))
+###eksperyment 1
+dist1 <- dist(dtmTfAllMatrix, method = "euclidean")
+hclust1 <- hclust(dist1, method = "ward.D2")
+plot(hclust1)
+barplot(
+  hclust1$height, 
+  names.arg = 18:1, 
+  col = "orange"
+)
+nClusters1 = 5
+clusters1 <- cutree(hclust1, k = nClusters1)
+clustersMatrix1 <- matrix(0, 19, nClusters1)
+rownames(clustersMatrix1) <- names(clusters1)
+for (i in 1:19) {
+  clustersMatrix1[i,clusters1[i]] <- 1
+}
+corrplot(clustersMatrix1)
+dendrogram1 <- as.dendrogram(hclust1)
+coloredDendrogram1 <- color_branches(dendrogram1, h = 100)
+plot(coloredDendrogram1)
+
+###eksperyment 2
+dist2 <- dist(dtmTfidfBoundsMatrix, method = "cosine")
+hclust2 <- hclust(dist2, method = "ward.D2")
+plot(hclust2)
+barplot(
+  hclust2$height, 
+  names.arg = 18:1, 
+  col = "orange"
+)
+nClusters2 = 3
+clusters2 <- cutree(hclust2, k = nClusters2)
+clustersMatrix2 <- matrix(0, 19, nClusters2)
+rownames(clustersMatrix2) <- names(clusters2)
+for (i in 1:19) {
+  clustersMatrix2[i,clusters2[i]] <- 1
+}
+corrplot(clustersMatrix2)
+dendrogram2 <- as.dendrogram(hclust2)
+coloredDendrogram2 <- color_branches(dendrogram2, h = 1.5)
+plot(coloredDendrogram2)
+
+###porównanie wyników eksperymentów
+Bk_plot(
+  dendrogram1,
+  dendrogram2,
+  add_E = F,
+  rejection_line_asymptotic = F,
+  main = "Index Fawlks'a Mallows'a",
+  ylab = "Index Fawlks'a Mallows'a"
+)
+
+##niehierarchiczna (k-średnich)
+
+###eksperyment 3
+nClusters3 <- 3
+kmeans3 <- kmeans(dtmTfidfBounds, centers = nClusters3)
+clustersMatrix3 <- matrix(0, 19, nClusters3)
+rownames(clustersMatrix3) <- names(kmeans3$cluster)
+for (i in 1:19) {
+  clustersMatrix3[i,kmeans3$cluster[i]] <- 1
+}
+corrplot(clustersMatrix3)
+
+pattern <- c(1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3)
+
+##porównanie wyników klasyfikacji
+randEx1Ex3 <- randIndex(clusters1, kmeans3$cluster, F)
+randEx1Ex2 <- randIndex(clusters1, clusters2, F)
+
+randEx1Pattern <- randIndex(clusters1, pattern, F)
+randEx2Pattern <- randIndex(clusters2, pattern, F)
+
+
