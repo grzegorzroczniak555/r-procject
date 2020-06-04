@@ -209,7 +209,7 @@ options(scipen = 5)
 plot(
   x,
   y,
-  col = "orange",
+  col = "black",
   main = "Analiza głównych składowych",
   xlab = "PC1",
   ylab = "PC2",
@@ -220,14 +220,14 @@ text(
   x,
   y, 
   paste("d", 1:19, sep = ""),
-  col = "orange",
+  col = "red",
   pos = 4
 )
 legend(
-  "bottom",
+  "bottomright",
   legend,
-  cex = 0.6,
-  text.col = "orange"
+  cex = 0.4,
+  text.col = "blue"
 )
 
 #eksport wykresu do pliku .png
@@ -241,7 +241,7 @@ options(scipen = 5)
 plot(
   x,
   y,
-  col = "green",
+  col = "black",
   main = "Analiza głównych składowych",
   xlab = "PC1",
   ylab = "PC2"
