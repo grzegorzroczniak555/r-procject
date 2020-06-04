@@ -224,7 +224,7 @@ legend(
   text.col = "orange"
 )
 
-#zapisujemy wykres do pliku
+#eksport wykresu do pliku .png
 plotFile <- paste(
   outputDir,
   "wykres.png",
@@ -235,7 +235,7 @@ options(scipen = 5)
 plot(
   x,
   y,
-  col = "blue",
+  col = "green",
   main = "Analiza głównych składowych",
   xlab = "PC1",
   ylab = "PC2"
@@ -247,10 +247,16 @@ text(
   col = "red",
   pos = 4
 )
+
+##par(xpd=TRUE)
+
 legend(
-  "bottom",
+  "bottomleft",
   legend,
-  cex = 0.6,
-  text.col = "green"
+  cex = 0.4,
+  text.col = "blue"
 )
 dev.off()
+
+
+
