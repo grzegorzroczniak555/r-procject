@@ -191,3 +191,66 @@ write.table(dtmTfidfBoundsMatrix, file = matrixFile, sep = ";", dec = ",", col.n
 #### redukcja wymiarów macierzy częstości
 ####
 pca <- prcomp(dtmTfidfBounds)
+
+#dane
+legend <- paste(paste("d", 1:19, sep = ""), rownames(dtmTfidfBounds), sep = ": ")
+x <- pca$x[,1]
+y <- pca$x[,2]
+
+
+#wykres
+options(scipen = 5)
+plot(
+  x,
+  y,
+  col = "orange",
+  main = "Analiza głównych składowych",
+  xlab = "PC1",
+  ylab = "PC2",
+  xlim = c(-0.16,0.16),
+  #ylim = c(,)
+)
+text(
+  x,
+  y, 
+  paste("d", 1:19, sep = ""),
+  col = "orange",
+  pos = 4
+)
+legend(
+  "bottom",
+  legend,
+  cex = 0.6,
+  text.col = "orange"
+)
+
+#eksport wykresu do pliku .png
+plotFile <- paste(
+  outputDir,
+  "pca.png",
+  sep = "\\"
+)
+png(filename = plotFile)
+options(scipen = 5)
+plot(
+  x,
+  y,
+  col = "orange",
+  main = "Analiza głównych składowych",
+  xlab = "PC1",
+  ylab = "PC2"
+)
+text(
+  x,
+  y, 
+  paste("d", 1:19, sep = ""),
+  col = "orange",
+  pos = 4
+)
+legend(
+  "bottom",
+  legend,
+  cex = 0.6,
+  text.col = "orange"
+)
+dev.off()
