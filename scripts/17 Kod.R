@@ -3,6 +3,8 @@ library(tm)
 library(hunspell)
 library(stringr)
 
+library(lsa)
+
 library(dendextend)
 library(corrplot)
 library(flexclust)
