@@ -8,13 +8,13 @@ inputDir <- ".\\data"
 outputDir <- ".\\result"
 
 #Korpus
-  #ścieżka
+#ścieżka
 corpusDir <- paste(
   inputDir,
   "dokumenty-tekstowe",
   sep = "\\"
 )
-  #tworzenie korpusu
+#tworzenie korpusu
 corpus <- VCorpus(
   DirSource(
     corpusDir,
@@ -75,17 +75,17 @@ preprocessedDir <- paste(
 writeCorpus(corpus, path = preprocessedDir)
 
 #macierz częstości
- #TDM - słowa jako wiersze, dokumenty jako kolumny
- #bez parametrów
+#TDM - słowa jako wiersze, dokumenty jako kolumny
+#bez parametrów
 tdmTfAll <- TermDocumentMatrix(corpus)
- #inverse document frequency
+#inverse document frequency
 tdmTfidfAll <- TermDocumentMatrix(
   corpus, 
   control = list(
     weighting = weightTfIdf
   )
 )
- #zakres liczby dokumentów w których musi być spełniony warunek
+#zakres liczby dokumentów w których musi być spełniony warunek
 tdmTfBounds <- TermDocumentMatrix(
   corpus, 
   control = list(
@@ -94,7 +94,7 @@ tdmTfBounds <- TermDocumentMatrix(
     )
   )
 )
- #weightTfIdf + bounds
+#weightTfIdf + bounds
 tdmTfidfBounds <- TermDocumentMatrix(
   corpus, 
   control = list(
@@ -105,16 +105,16 @@ tdmTfidfBounds <- TermDocumentMatrix(
   )
 )
 # DTM - dokumenty jako wiersze, słowa jako kolumny
- #bez parametrów
+#bez parametrów
 dtmTfAll <- DocumentTermMatrix(corpus)
- #inverse document frequency
+#inverse document frequency
 dtmTfidfAll <- DocumentTermMatrix(
   corpus, 
   control = list(
     weighting = weightTfIdf
   )
 )
- ##weightTfIdf + bounds
+##weightTfIdf + bounds
 dtmTfidfBounds <- DocumentTermMatrix(
   corpus, 
   control = list(
@@ -124,17 +124,6 @@ dtmTfidfBounds <- DocumentTermMatrix(
     )
   )
 )
-
-tdmTfidfBounds <- TermDocumentMatrix(
-  corpus, 
-  control = list(
-    weighting = weightTfIdf,
-    bounds = list(
-      global = c(2,16)
-    )
-  )
-)
-
 
 #konwersja na macierz klasyczną
 tdmTfAllMatrix <- as.matrix(tdmTfAll)
@@ -194,4 +183,3 @@ matrixFile <- paste(
   sep = "\\"
 )
 write.table(dtmTfidfBoundsMatrix, file = matrixFile, sep = ";", dec = ",", col.names = NA)
-
