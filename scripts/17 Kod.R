@@ -227,7 +227,7 @@ legend(
 #eksport wykresu do pliku .png
 plotFile <- paste(
   outputDir,
-  "wykres.png",
+  "wykres-glowne-skladowe.png",
   sep = "\\"
 )
 png(filename = plotFile)
@@ -260,3 +260,104 @@ dev.off()
 
 
 
+
+
+######
+## Dekompozycja według wartości osobliwych
+######
+lsa <- lsa(tdmTfBoundsMatrix)
+
+#przygotowanie danych do wykresu
+coordDocs <- lsa$dk%*%diag(lsa$sk)
+coordTerms <- lsa$tk%*%diag(lsa$sk)
+termsImportance <- diag(lsa$tk%*%diag(lsa$sk)%*%t(diag(lsa$sk))%*%t(lsa$tk))
+importantTerms <- names(tail(sort(termsImportance),30))
+coordImportantTerms <- coordTerms[importantTerms,]
+legend <- paste(paste("d", 1:19, sep = ""), rownames(coordDocs), sep = ": ")
+x1 <- coordDocs[,1]
+y1 <- coordDocs[,2]
+x2 <- coordImportantTerms[,1]
+y2 <- coordImportantTerms[,2]
+
+#wykres dokumentów w przestrzeni dwuwymiarowej
+options(scipen = 5)
+plot(
+  x1,
+  y1,
+  col = "orange",
+  main = "Analiza ukrytych wymiarów semantycznych",
+  xlab = "SD1",
+  ylab = "DS2",
+  #xlim = c(-0.16,0.16),
+  #ylim = c(,)
+)
+text(
+  x1,
+  y1, 
+  paste("d", 1:19, sep = ""),
+  col = "orange",
+  pos = 4
+)
+points(
+  x2,
+  y2,
+  pch = 2,
+  col = "brown"
+)
+text(
+  x2,
+  y2,
+  rownames(coordImportantTerms),
+  col = "brown"
+)
+legend(
+  "topleft",
+  legend,
+  cex = 0.6,
+  text.col = "orange"
+)
+
+#zapis do pliku
+plotFile <- paste(
+  outputDir,
+  "wykres-dekompozycja.png",
+  sep = "\\"
+)
+png(filename = plotFile)
+options(scipen = 5)
+plot(
+  x1,
+  y1,
+  col = "orange",
+  main = "Analiza ukrytych wymiarów semantycznych",
+  xlab = "SD1",
+  ylab = "DS2",
+  #xlim = c(-0.16,0.16),
+  #ylim = c(,)
+)
+text(
+  x1,
+  y1, 
+  paste("d", 1:19, sep = ""),
+  col = "orange",
+  pos = 4
+)
+points(
+  x2,
+  y2,
+  pch = 2,
+  col = "brown"
+)
+text(
+  x2,
+  y2,
+  rownames(coordImportantTerms),
+  col = "brown"
+)
+legend(
+  "topleft",
+  legend,
+  cex = 0.6,
+  text.col = "orange"
+)
+dev.off()
