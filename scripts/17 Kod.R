@@ -3,6 +3,11 @@ library(tm)
 library(hunspell)
 library(stringr)
 
+library(dendextend)
+library(corrplot)
+library(flexclust)
+library(proxy)
+
 #Katalogi funkcjonalne
 inputDir <- ".\\data"
 outputDir <- ".\\result"
