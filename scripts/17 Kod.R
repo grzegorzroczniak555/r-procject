@@ -226,7 +226,7 @@ text(
 legend(
   "bottomright",
   legend,
-  cex = 0.4,
+  cex = 0.5,
   text.col = "blue"
 )
 
@@ -290,7 +290,7 @@ options(scipen = 5)
 plot(
   x1,
   y1,
-  col = "orange",
+  col = "black",
   main = "Analiza ukrytych wymiarów semantycznych",
   xlab = "SD1",
   ylab = "DS2",
@@ -301,26 +301,26 @@ text(
   x1,
   y1, 
   paste("d", 1:19, sep = ""),
-  col = "orange",
+  col = "blue",
   pos = 4
 )
 points(
   x2,
   y2,
-  pch = 2,
-  col = "brown"
+  pch = 1,
+  col = "orange"
 )
 text(
   x2,
   y2,
   rownames(coordImportantTerms),
-  col = "brown"
+  col = "purple"
 )
 legend(
   "topleft",
   legend,
   cex = 0.6,
-  text.col = "orange"
+  text.col = "red"
 )
 
 #zapis do pliku
