@@ -384,7 +384,7 @@ plot(hclust1)
 barplot(
   hclust1$height, 
   names.arg = 19:1, 
-  col = "orange"
+  col = "blue"
 )
 nClusters1 = 5
 clusters1 <- cutree(hclust1, k = nClusters1)
@@ -408,7 +408,7 @@ barplot(
   names.arg = 19:1, 
   col = "orange"
 )
-nClusters2 = 3
+nClusters2 = 13
 clusters2 <- cutree(hclust2, k = nClusters2)
 clustersMatrix2 <- matrix(0, 19, nClusters2)
 rownames(clustersMatrix2) <- names(clusters2)
@@ -424,14 +424,14 @@ plot(coloredDendrogram2)
 ###eksperyment 3 - metoda "binary"
 dist3 <- dist(dtmTfAllMatrix, method = "binary")
 hclust3 <- hclust(dist3, method = "ward.D2")
-plot(hclust1)
+plot(hclust3)
 barplot(
   hclust3$height, 
   names.arg = 19:1,
-  col = "orange"
+  col = "green"
 )
-nClusters3 = 5
-clusters1 <- cutree(hclust3, k = nClusters3)
+nClusters3 = 8
+clusters3 <- cutree(hclust3, k = nClusters3)
 clustersMatrix3 <- matrix(0, 19, nClusters3)
 rownames(clustersMatrix3) <- names(clusters3)
 for (i in 1:19) {
@@ -471,4 +471,101 @@ Bk_plot(
 
 
 
+#analiza ukrytej alokacji Dirichlet'a
+nTerms <- ncol(dtmTfAll)
+nTopics <- 4
+lda <- LDA(
+  dtmTfAll,
+  k = nTopics,
+  method = "Gibbs",
+  control = list(
+    burnin = 2000,
+    thin = 100,
+    iter = 3000
+  )
+)
+perplexity <- perplexity(lda, dtmTfAll)
+results <- posterior(lda)
 
+par(mai = c(1,2,1,1))
+#prezentacja tematów
+topic1 <- head(sort(results$terms[1,], decreasing = T),20)
+barplot(
+  rev(topic1),
+  horiz = T,
+  las = 1, 
+  main = "Temat 1",
+  xlab = "Prawdopodobieństwo",
+  col = "orange"
+)
+
+topic2 <- head(sort(results$terms[2,], decreasing = T),20)
+barplot(
+  rev(topic2),
+  horiz = T,
+  las = 1, 
+  main = "Temat 2",
+  xlab = "Prawdopodobieństwo",
+  col = "violet"
+)
+
+topic3 <- head(sort(results$terms[3,], decreasing = T),20)
+barplot(
+  rev(topic3),
+  horiz = T,
+  las = 1, 
+  main = "Temat 3",
+  xlab = "Prawdopodobieństwo",
+  col = "turquoise"
+)
+
+topic4 <- head(sort(results$terms[4,], decreasing = T),20)
+barplot(
+  rev(topic4),
+  horiz = T,
+  las = 1, 
+  main = "Temat 4",
+  xlab = "Prawdopodobieństwo",
+  col = "lightgreen"
+)
+
+#prezentacja dokumentów
+document1 <- results$topics[1,]
+barplot(
+  rev(document1),
+  horiz = T,
+  las = 1, 
+  main = rownames(results$topics)[1],
+  xlab = "Prawdopodobieństwo",
+  col = "violet"
+)
+
+document4 <- results$topics[4,]
+barplot(
+  rev(document4),
+  horiz = T,
+  las = 1, 
+  main = rownames(results$topics)[4],
+  xlab = "Prawdopodobieństwo",
+  col = "lightgreen"
+)
+
+document11 <- results$topics[11,]
+barplot(
+  rev(document11),
+  horiz = T,
+  las = 1, 
+  main = rownames(results$topics)[11],
+  xlab = "Prawdopodobieństwo",
+  col = "turquoise"
+)
+
+document19 <- results$topics[19,]
+barplot(
+  rev(document19),
+  horiz = T,
+  las = 1, 
+  main = rownames(results$topics)[19],
+  xlab = "Prawdopodobieństwo",
+  col = "orange"
+)
