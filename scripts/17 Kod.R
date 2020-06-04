@@ -375,13 +375,15 @@ dev.off()
 
 
 par(mai = c(1,2,1,1))
-###eksperyment 1
+
+
+###eksperyment nr 1 - metoda "euclidean"
 dist1 <- dist(dtmTfAllMatrix, method = "euclidean")
 hclust1 <- hclust(dist1, method = "ward.D2")
 plot(hclust1)
 barplot(
   hclust1$height, 
-  names.arg = 18:1, 
+  names.arg = 19:1, 
   col = "orange"
 )
 nClusters1 = 5
@@ -396,13 +398,14 @@ dendrogram1 <- as.dendrogram(hclust1)
 coloredDendrogram1 <- color_branches(dendrogram1, h = 100)
 plot(coloredDendrogram1)
 
-###eksperyment 2
+
+###eksperyment nr 2 - metoda "cosine"
 dist2 <- dist(dtmTfidfBoundsMatrix, method = "cosine")
 hclust2 <- hclust(dist2, method = "ward.D2")
 plot(hclust2)
 barplot(
   hclust2$height, 
-  names.arg = 18:1, 
+  names.arg = 19:1, 
   col = "orange"
 )
 nClusters2 = 3
@@ -417,35 +420,55 @@ dendrogram2 <- as.dendrogram(hclust2)
 coloredDendrogram2 <- color_branches(dendrogram2, h = 1.5)
 plot(coloredDendrogram2)
 
+
+###eksperyment 3 - metoda "binary"
+dist3 <- dist(dtmTfAllMatrix, method = "binary")
+hclust3 <- hclust(dist3, method = "ward.D2")
+plot(hclust1)
+barplot(
+  hclust3$height, 
+  names.arg = 19:1,
+  col = "orange"
+)
+nClusters3 = 5
+clusters1 <- cutree(hclust3, k = nClusters3)
+clustersMatrix3 <- matrix(0, 19, nClusters3)
+rownames(clustersMatrix3) <- names(clusters3)
+for (i in 1:19) {
+  clustersMatrix3[i,clusters3[i]] <- 1
+}
+corrplot(clustersMatrix3)
+dendrogram3 <- as.dendrogram(hclust3)
+coloredDendrogram3 <- color_branches(dendrogram3, h = 100)
+plot(coloredDendrogram3)
+
+
 ###porównanie wyników eksperymentów
 Bk_plot(
   dendrogram1,
   dendrogram2,
   add_E = F,
   rejection_line_asymptotic = F,
-  main = "Index Fawlks'a Mallows'a",
+  main = "Porównanie eksperymentu 1 i 2",
+  ylab = "Index Fawlks'a Mallows'a"
+)
+Bk_plot(
+  dendrogram1,
+  dendrogram3,
+  add_E = F,
+  rejection_line_asymptotic = F,
+  main = "Porównanie eksperymentu 1 i 3",
+  ylab = "Index Fawlks'a Mallows'a"
+)
+Bk_plot(
+  dendrogram2,
+  dendrogram3,
+  add_E = F,
+  rejection_line_asymptotic = F,
+  main = "Porównanie eksperymentu 2 i 3",
   ylab = "Index Fawlks'a Mallows'a"
 )
 
-##niehierarchiczna (k-średnich)
 
-###eksperyment 3
-nClusters3 <- 3
-kmeans3 <- kmeans(dtmTfidfBounds, centers = nClusters3)
-clustersMatrix3 <- matrix(0, 19, nClusters3)
-rownames(clustersMatrix3) <- names(kmeans3$cluster)
-for (i in 1:19) {
-  clustersMatrix3[i,kmeans3$cluster[i]] <- 1
-}
-corrplot(clustersMatrix3)
-
-pattern <- c(1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3)
-
-##porównanie wyników klasyfikacji
-randEx1Ex3 <- randIndex(clusters1, kmeans3$cluster, F)
-randEx1Ex2 <- randIndex(clusters1, clusters2, F)
-
-randEx1Pattern <- randIndex(clusters1, pattern, F)
-randEx2Pattern <- randIndex(clusters2, pattern, F)
 
 
