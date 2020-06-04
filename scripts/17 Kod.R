@@ -125,7 +125,7 @@ dtmTfidfBounds <- DocumentTermMatrix(
   )
 )
 
-#konwersja na macierz klasyczną
+#konwersja na macierz klasyczną (z macierzy rzadkich)
 tdmTfAllMatrix <- as.matrix(tdmTfAll)
 tdmTfidfAllMatrix <- as.matrix(tdmTfidfAll)
 tdmTfBoundsMatrix <- as.matrix(tdmTfBounds)
@@ -183,3 +183,11 @@ matrixFile <- paste(
   sep = "\\"
 )
 write.table(dtmTfidfBoundsMatrix, file = matrixFile, sep = ";", dec = ",", col.names = NA)
+
+
+
+
+####
+#### redukcja wymiarów macierzy częstości
+####
+pca <- prcomp(dtmTfidfBounds)
