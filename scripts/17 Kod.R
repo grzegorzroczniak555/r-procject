@@ -224,10 +224,10 @@ legend(
   text.col = "orange"
 )
 
-#eksport wykresu do pliku .png
+#zapisujemy wykres do pliku
 plotFile <- paste(
   outputDir,
-  "pca.png",
+  "wykres.png",
   sep = "\\"
 )
 png(filename = plotFile)
@@ -235,7 +235,7 @@ options(scipen = 5)
 plot(
   x,
   y,
-  col = "orange",
+  col = "blue",
   main = "Analiza głównych składowych",
   xlab = "PC1",
   ylab = "PC2"
@@ -244,13 +244,13 @@ text(
   x,
   y, 
   paste("d", 1:19, sep = ""),
-  col = "orange",
+  col = "red",
   pos = 4
 )
 legend(
   "bottom",
   legend,
   cex = 0.6,
-  text.col = "orange"
+  text.col = "green"
 )
 dev.off()
