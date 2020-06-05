@@ -477,7 +477,7 @@ Bk_plot(
 ### alokacja Dirichleta
 #######
 nTerms <- ncol(dtmTfAll)
-nTopics <- 4
+nTopics <- 5
 lda <- LDA(
   dtmTfAll,
   k = nTopics,
@@ -492,7 +492,8 @@ perplexity <- perplexity(lda, dtmTfAll)
 results <- posterior(lda)
 
 par(mai = c(1,2,1,1))
-#prezentacja tematów
+
+#tematy
 topic1 <- head(sort(results$terms[1,], decreasing = T),20)
 barplot(
   rev(topic1),
@@ -533,7 +534,17 @@ barplot(
   col = "lightgreen"
 )
 
-#prezentacja dokumentów
+topic5 <- head(sort(results$terms[5,], decreasing = T),20)
+barplot(
+  rev(topic5),
+  horiz = T,
+  las = 1, 
+  main = "Temat nr 5",
+  xlab = "Prawdopodobieństwo",
+  col = "red"
+)
+
+#tematy - ciag dalszy
 document1 <- results$topics[1,]
 barplot(
   rev(document1),
@@ -561,7 +572,17 @@ barplot(
   las = 1, 
   main = rownames(results$topics)[11],
   xlab = "Prawdopodobieństwo",
-  col = "turquoise"
+  col = "purple"
+)
+
+document15 <- results$topics[15,]
+barplot(
+  rev(document19),
+  horiz = T,
+  las = 1, 
+  main = rownames(results$topics)[15],
+  xlab = "Prawdopodobieństwo",
+  col = "pink"
 )
 
 document19 <- results$topics[19,]
@@ -571,7 +592,7 @@ barplot(
   las = 1, 
   main = rownames(results$topics)[19],
   xlab = "Prawdopodobieństwo",
-  col = "orange"
+  col = "yellow"
 )
 
 
@@ -583,17 +604,17 @@ barplot(
 keywordsTf1 <- head(sort(dtmTfAllMatrix[1,], decreasing = T))
 keywordsTf1
 
-##wagi tfidf jako miara ważności słów
+##ważnośc słów według tfidf
 keywordsTfidf1 <- head(sort(dtmTfidfAllMatrix[1,], decreasing = T))
 keywordsTfidf1
 
-##lda jako miara ważności słów
+##waznosc slow wedlug lda
 termsImportance1 <- c(results$topics[1,]%*%results$terms)
 names(termsImportance1) <- colnames(results$terms)
 keywordsLda1 <- head(sort(termsImportance1, decreasing = T))
 keywordsLda1
 
-##chmura tagów
+##tag cloud (chmura tagów)
 par(mai = c(0,0,0,0))
 wordcloud(corpus[15], max.words = 200, colors = brewer.pal(8,"PuOr"))
 
