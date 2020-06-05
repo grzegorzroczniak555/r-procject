@@ -2,7 +2,8 @@
 
 ## Eksploracyjna analiza tekstu w R
 
-### Projekt przygotowany na ćwiczenia z przedmiotu **Przetwarzanie języka naturalnego**, prowadzonych przez **mgr Katarzyna Wójcik**
+Projekt przygotowany na ćwiczenia z przedmiotu **Przetwarzanie języka naturalnego**, 
+prowadzonych przez **mgr Katarzyna Wójcik**
 
 #### Projekt przygotowali:
  - **Grzegorz Roczniak**, 213885, WZISN2-2411IS
