@@ -470,8 +470,9 @@ Bk_plot(
 )
 
 
-
-#analiza ukrytej alokacji Dirichlet'a
+########
+### alokacja Dirichleta
+#######
 nTerms <- ncol(dtmTfAll)
 nTopics <- 4
 lda <- LDA(
