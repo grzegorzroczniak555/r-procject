@@ -9,6 +9,8 @@ library(corrplot)
 library(flexclust)
 library(proxy)
 library(lda)
+library(topicmodels)
+library(wordcloud)
 
 #Katalogi funkcjonalne
 inputDir <- ".\\data"
@@ -496,7 +498,7 @@ barplot(
   rev(topic1),
   horiz = T,
   las = 1, 
-  main = "Temat 1",
+  main = "Temat nr 1",
   xlab = "Prawdopodobieństwo",
   col = "orange"
 )
@@ -506,7 +508,7 @@ barplot(
   rev(topic2),
   horiz = T,
   las = 1, 
-  main = "Temat 2",
+  main = "Temat nr 2",
   xlab = "Prawdopodobieństwo",
   col = "violet"
 )
@@ -516,7 +518,7 @@ barplot(
   rev(topic3),
   horiz = T,
   las = 1, 
-  main = "Temat 3",
+  main = "Temat nr 3",
   xlab = "Prawdopodobieństwo",
   col = "turquoise"
 )
@@ -526,7 +528,7 @@ barplot(
   rev(topic4),
   horiz = T,
   las = 1, 
-  main = "Temat 4",
+  main = "Temat nr 4",
   xlab = "Prawdopodobieństwo",
   col = "lightgreen"
 )
@@ -593,5 +595,5 @@ keywordsLda1
 
 ##chmura tagów
 par(mai = c(0,0,0,0))
-wordcloud(corpus[16], max.words = 200, colors = brewer.pal(8,"PuOr"))
+wordcloud(corpus[15], max.words = 200, colors = brewer.pal(8,"PuOr"))
 
