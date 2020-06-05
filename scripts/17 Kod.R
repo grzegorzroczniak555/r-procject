@@ -572,3 +572,26 @@ barplot(
   col = "orange"
 )
 
+
+
+
+#######
+### Frazy kluczowe
+#######
+keywordsTf1 <- head(sort(dtmTfAllMatrix[1,], decreasing = T))
+keywordsTf1
+
+##wagi tfidf jako miara ważności słów
+keywordsTfidf1 <- head(sort(dtmTfidfAllMatrix[1,], decreasing = T))
+keywordsTfidf1
+
+##lda jako miara ważności słów
+termsImportance1 <- c(results$topics[1,]%*%results$terms)
+names(termsImportance1) <- colnames(results$terms)
+keywordsLda1 <- head(sort(termsImportance1, decreasing = T))
+keywordsLda1
+
+##chmura tagów
+par(mai = c(0,0,0,0))
+wordcloud(corpus[16], max.words = 200, colors = brewer.pal(8,"PuOr"))
+
