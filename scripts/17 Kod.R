@@ -8,6 +8,7 @@ library(dendextend)
 library(corrplot)
 library(flexclust)
 library(proxy)
+library(lda)
 
 #Katalogi funkcjonalne
 inputDir <- ".\\data"
@@ -570,3 +571,4 @@ barplot(
   xlab = "Prawdopodobieństwo",
   col = "orange"
 )
+
